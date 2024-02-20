@@ -1,0 +1,44 @@
+package com.example.projekt1.service;
+
+import com.example.projekt1.model.User;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+@Service
+@Slf4j
+public class UserService {
+
+    public void sortUsersByAge() {
+        List<User> userList = createUserList();
+
+        List<User> collect = userList.stream()
+                .sorted(Comparator.comparing(User::getAge))
+                .toList();
+
+        collect.forEach(user -> log.info("user name: {} , age: {}", user.getName(), user.getAge()));
+    }
+
+    public List<User> createUserList() {
+        ArrayList<User> users = new ArrayList<>();
+
+        users.add(createUser("Jacek", 20));
+        users.add(createUser("Jacek2", 270));
+        users.add(createUser("Jacek3", 2));
+        users.add(createUser("Jacek4", 20));
+        users.add(createUser("Jacek5", 208));
+
+        return users;
+    }
+
+    private User createUser(String name, Integer age) {
+        User user = new User(name, age);
+        log.info("Helllo new user {} {}", user.getName(), user.getAge());
+        return user;
+    }
+
+
+
+}
